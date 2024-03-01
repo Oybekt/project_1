@@ -30,7 +30,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         default=uuid.uuid4, unique=True, editable=False, db_index=True, primary_key=True
         )
     full_name = models.CharField(
-        max_length=15, unique=True, editable=False, db_index=True)
+        max_length=15, db_index=True)
     phone = models.CharField(max_length=15, unique=True, verbose_name="Telefon", db_index=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)

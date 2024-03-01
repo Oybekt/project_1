@@ -1,11 +1,27 @@
-from django.shortcuts import render
-
-# Create your views here.
+from django.shortcuts import render, redirect
+from user.forms import SignUpForm, CustomLoginForm
+from django.contrib.auth.views import LoginView, LogoutView
 
 
 def sign_up(request):
-    return render(request, 'regitration/signup.html')
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("user:sign_in")
+    else:
+        form = SignUpForm()
+    data = {
+        "form": form,
+    }
+    return render(request, 'regitration/signup.html', data)
 
 
-def sign_in(request):
-    return render(request, 'regitration/signin.html')
+class LoginView(LoginView):
+    template_name = "regitration/signin.html"
+    authentication_form = CustomLoginForm
+
+
+
+# def sign_in(request):
+#     return render(request, 'regitration/signin.html')
