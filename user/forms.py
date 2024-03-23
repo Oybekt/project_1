@@ -84,7 +84,7 @@ class CustomLoginForm(AuthenticationForm):
         help_text="<small><b>Bo'sh</b> joylarsiz va <b>(+998)</b> kerak emas</small>",
         label=_("Telefon"),
         widget=forms.TextInput(
-            attrs={'class': 'form-control mb-3', 'placeholder': 'Parol', 'type': "password"}),
+            attrs={'class': 'form-control mb-3', 'placeholder': 'Parol', 'type': "text"}),
     )
 
     password = forms.CharField(
@@ -139,7 +139,7 @@ class CustomLoginForm(AuthenticationForm):
         return ValidationError(
             self.error_messages['invalid_login'],
             code="invalid_login",
-            params={"phone": self.fields['username'].lebal},
+            params={"phone": self.fields['username'].label},
         )
 
 
