@@ -14,6 +14,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split(',')
 
+WEB_URL = os.environ.get('WEB_URL')
+
 
 
 DJANGO_APPS = [
@@ -52,6 +54,7 @@ MIDDLEWARE = [
 
 
 CSRF_TRUSTED_ORIGINS = [
+    WEB_URL,
     "http://127.0.0.1",
     "http://localhost"
 ]
