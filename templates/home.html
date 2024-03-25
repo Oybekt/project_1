@@ -50,15 +50,13 @@ Main hero START -->
         <div class="row g-4">
 
           <div class="mb-4">
-            <h2 class="m-0"><i class="bi bi-hourglass-top me-2"></i>Key messages</h2>
+            <h2 class="m-0"><i class="bi bi-hourglass-top me-2"></i>Latest messages</h2>
           </div>
 
           {% for i in one %}
           <!-- Left big card -->
           <div class="col-lg-6">
-            <div
-              class="card card-overlay-bottom card-grid-lg card-bg-scale"
-              style=" background-image: url({% if i.img %}{{ i.img.url }}{% else %}https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAHSMZLEJ_a9rxmsmXh8yPVwMR09oawNvRdA&usqp=CAU{% endif %}); background-position: center left; background-size: cover; ">
+            <div class="card card-overlay-bottom card-grid-lg card-bg-scale" style=" background-image: url({% if i.img %}{{ i.img.url }}{% else %}https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAHSMZLEJ_a9rxmsmXh8yPVwMR09oawNvRdA&usqp=CAU{% endif %}); background-position: center left; background-size: cover; ">
               <!-- Card featured -->
               <span class="card-featured" title="Featured post">
                 <i class="fas fa-star"></i>
@@ -232,22 +230,17 @@ Main hero START -->
                       </div>
                       {% endif %}
                       {% if post.audio %}
-                      <!-- audio -->
+                        <h1>
+                          <i class="bi bi-mic-fill"></i>
+                        </h1>
                       <div class="w-100 my-auto">
-                        <!-- Audio START -->
                         <div class="player-wrapper bg-light rounded">
-                          <audio class="player-audio mb-4" crossorigin>
-                            <source  src="{{ post.audio.url }}" type="audio/mp3">
-                          </audio>
                         </div>
-                        <!-- Audio END -->
                       </div>
                       {% endif %}
 
                       {% if not post.video %}
-                      <!-- Card overlay bottom -->
                       <div class="w-100 mt-auto">
-                        <!-- Card category -->
                         <a href="#" class="badge text-bg-primary mb-2">
                           <i class="fas fa-circle me-2 small fw-bold"></i>
                           {{ post.category }}

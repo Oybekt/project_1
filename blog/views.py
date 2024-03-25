@@ -1,8 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from blog.models import Post, Category, Comment, Trend
+from blog.models import Post, Category, Comment, Trend,Like
 from blog.forms import CreatePostForm, UpdatePostForm, CommentForm
 from collections import Counter
 from django.db.models import Q
+from django.http import JsonResponse
 
 
 def extract_hashtags(text, trends):
@@ -32,7 +33,7 @@ def home(request):
             if word[0] == '#':
                 trends.append(word[1:])
 
-    for trend in Counter(trends).most_common(10):
+    for trend in Counter(trends).most_common(100):
         Trend.objects.create(hashtag=trend[0], occurences=trend[1])
 
     if request.method == 'POST':
@@ -181,3 +182,19 @@ def category(request, query):
     }
     return render(request, 'category.html', data)
 
+def like_post(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    liked, created = Like.objects.get_or_create(post=post, user=request.user)
+    likes_count = post.likes.count()
+
+    trends = []
+
+    for trend in Counter(trends).most_common(10):
+        Trend.objects.create(hashtag=trend[0], occurences=trend[1])
+
+    if not created:
+        liked.delete()
+
+    
+
+    return JsonResponse({'likes_count': likes_count})

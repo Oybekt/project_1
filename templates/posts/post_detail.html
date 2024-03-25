@@ -112,7 +112,9 @@
                             <p class="my-2">
                                 {{ post.author.bio }}
                             </p>
-                            <!-- Social icons -->
+
+                            
+
                             <ul class="nav">
                                 <li class="nav-item">
                                     <a class="nav-link ps-0 pe-2 fs-5" href="#"><i class="fab fa-facebook-square"></i></a>
@@ -126,7 +128,29 @@
                             </ul>					
                         </div>
                     </div>
-                    <!-- Author info END -->
+                    
+                    <hr>
+
+                    {% if request.user.is_authenticated %}
+                    <div id="form-reply">
+                        <h3>Click Like</h3>
+                        <form class="row g-3 mt-2" method="post">
+                        </form>
+                    </div>
+                    {% else %}
+                    <h5>Please login to click like</h5>
+                    {% endif %}
+
+
+                    <p id="like-count">
+                        {% if request.user.is_authenticated %}
+                        <button id="like-button">
+                            <h4>
+                            <i class="bi bi-hand-thumbs-up">{{ likes_count }} likes</i>
+                            </h4>
+                        </button>
+                        {% endif %}
+                    </p>
     
                     <hr>
     
@@ -273,6 +297,27 @@ t
         var commentId = element.getAttribute("data-comment-id");
         document.getElementById("parent-comment-id").value = commentId;
     }
+</script>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const likeButton = document.getElementById('like-button');
+        const likesCount = document.getElementById('like-count');
+  
+        likeButton.addEventListener('click', function () {
+            fetch('{% url "blog:like_post" post.id %}', {
+              method: 'POST',
+              headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+              },
+            })
+              .then(response => response.json())
+              .then(data => {
+                likesCount.textContent = data.likes_count + ' Likes';
+              });
+        });
+    });
 </script>
 
 
